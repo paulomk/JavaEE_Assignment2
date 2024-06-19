@@ -3,11 +3,15 @@ package com.cestar.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.cestar.dao.UserDao;
+import com.cestar.model.User;
 
 /**
  * Servlet implementation class Controller
@@ -23,6 +27,8 @@ public class Controller extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+    UserDao dao = new UserDao();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,15 +44,11 @@ public class Controller extends HttpServlet {
 			break;
 			
 		case "/register":
-			registerPage(request,response);
+			registerUser(request,response);
 			break;
 			
-		case "/welcome":
-			welcome(request, response);
-			break;
-			
-		case "/completion":
-			completion(request, response);
+		case "/validate":
+			validate(request, response);
 			break;
 
 		default:
@@ -59,33 +61,48 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		;
 	}
 	
 	protected void loginPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		rd.forward(request, response);
 	}
 	
-	protected void registerPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	protected void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		String userName = request.getParameter("user-name");
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		String contact = request.getParameter("contact");
+		String city = request.getParameter("city");
+		
+		User userFromForm = new User(userName, password, email, contact, city);
+	
+		if(dao.setUser(userFromForm)) {
+			out.print("User " + userName + "Registered successfully!");
+		}
+		else {
+			out.print("Not valid User. Try Again");
+		}
+		
+		
 	}
 	
-	protected void welcome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	protected void validate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		
+		String userName = request.getParameter("user");
+		String password = request.getParameter("password");
+		
+		if(dao.validatePassword(userName, password)) {
+			out.print("welcome, " + userName);
+		}
+		else {
+			out.print("User or password invalid!");
+		}
+		
 	}
-	
-	protected void completion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-	
-	protected void error(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-	
 	
 }
+
