@@ -102,10 +102,12 @@ public class Controller extends HttpServlet {
 		String password = request.getParameter("password");
 		if(dao.validatePassword(userName, password)) {
 			out.print("welcome, " + userName);
+			request.setAttribute("user", userName);
 			
 	        request.getRequestDispatcher("userPortal.jsp").forward(request, response);
 		}
 		else {
+			request.setAttribute("error", "Unvalid Usernamer/Password");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		

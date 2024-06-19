@@ -12,7 +12,11 @@
 	<div class=container>
 	
 		<h1 class="display-1 mb-5" style="font-weight: bold;">Enter your credentials</h1>
-		
+		<% 
+		if(request.getAttribute("error")!= null){
+			out.print("<p class='alert alert-danger'>" + request.getAttribute("error") + "</p>");
+		} 
+		%>
 		<form action="validate">
 			<div class="form-floating mb-3">
 				<input type="text" name="user" id="user" placeholder="username" class="form-control">	
