@@ -14,7 +14,6 @@
 
 	<form action="register">
 	
-	
 		<!-- Personal Information Section -->
 		<p class="display-4 mt-5">Enter information</p>
 		<hr>

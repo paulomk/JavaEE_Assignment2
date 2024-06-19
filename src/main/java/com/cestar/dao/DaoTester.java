@@ -12,7 +12,7 @@ public class DaoTester {
 		
 		//
 		User newUser = new User ("TestUser", "1", "1", "1", "1");
-		dao.setUser(newUser);
+		System.out.println("set user: " + dao.setUser(newUser));
 		
 		
 		System.out.println("Validation result: " + dao.validatePassword("TestUser", "1"));

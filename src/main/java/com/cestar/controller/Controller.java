@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cestar.dao.UserDao;
 import com.cestar.model.User;
@@ -66,6 +67,7 @@ public class Controller extends HttpServlet {
 	
 	protected void loginPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+		
 		rd.forward(request, response);
 	}
 	
@@ -78,12 +80,16 @@ public class Controller extends HttpServlet {
 		String city = request.getParameter("city");
 		
 		User userFromForm = new User(userName, password, email, contact, city);
-	
+
 		if(dao.setUser(userFromForm)) {
-			out.print("User " + userName + "Registered successfully!");
+	        request.getRequestDispatcher("index.jsp").forward(request, response);
+
+	        
 		}
 		else {
-			out.print("Not valid User. Try Again");
+			//out.print("Not valid User. Try Again");
+			request.getRequestDispatcher("register.jsp").forward(request, response);
+			
 		}
 		
 		
@@ -94,12 +100,13 @@ public class Controller extends HttpServlet {
 		
 		String userName = request.getParameter("user");
 		String password = request.getParameter("password");
-		
 		if(dao.validatePassword(userName, password)) {
 			out.print("welcome, " + userName);
+			
+	        request.getRequestDispatcher("userPortal.jsp").forward(request, response);
 		}
 		else {
-			out.print("User or password invalid!");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		
 	}
