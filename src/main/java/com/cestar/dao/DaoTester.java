@@ -1,13 +1,23 @@
 package com.cestar.dao;
 
+import com.cestar.model.User;
+
 public class DaoTester {
 
 	public static void main(String[] args) {
-		UserDao user = new UserDao();
-		user.startConnection();
+		UserDao dao = new UserDao();
+		dao.startConnection();
 		
-		user.getUser("incredible");
-
+		dao.getUserFromName("incredible");
+		
+		//
+		User newUser = new User ("TestUser", "1", "1", "1", "1");
+		dao.setUser(newUser);
+		
+		
+		System.out.println("Validation result: " + dao.validatePassword("TestUser", "1"));
+		System.out.println("Validation result: " + dao.validatePassword("incredible", "helloworld"));
+		System.out.println("Validation result: " + dao.validatePassword("incredible", "nonono"));
 	}
 
 }

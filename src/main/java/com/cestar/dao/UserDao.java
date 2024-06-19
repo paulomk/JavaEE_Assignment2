@@ -29,7 +29,7 @@ public class UserDao {
 		return con;
 	}
 	
-	public User getUser(String userName) {
+	public User getUserFromName(String userName) {
 		User user_from_db = null;
 		Connection con = startConnection();
 		
@@ -56,5 +56,41 @@ public class UserDao {
 		}
 		return user_from_db;
 	}
+	public boolean setUser(User userFromForm) {
+		Connection con = startConnection();
+		boolean result = false;
+		String sql = "INSERT INTO `USERS` VALUES (?,?,?,?,?)";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userFromForm.getUserName());
+			pstmt.setString(2, userFromForm.getPassword());
+			pstmt.setString(3, userFromForm.getEmail());
+			pstmt.setString(4, userFromForm.getContact());
+			pstmt.setString(5,  userFromForm.getCity());
+			int i = pstmt.executeUpdate();
+			
+			if (i > 0) {
+				result = true;
+				System.out.println("Record added successfully !!!");
+			}
+			else {
+				System.out.println("Failed");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
+	public boolean validatePassword(String userNameForm, String passForm) {
+		boolean result = false;
+		
+		User userFromDb = getUserFromName(userNameForm);
+		
+		if(userFromDb != null) {
+			result = userFromDb.getPassword().equals(passForm) ? true : false;
+		}
+		return result;
+	}
 }
