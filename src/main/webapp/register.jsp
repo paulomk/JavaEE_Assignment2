@@ -17,6 +17,11 @@
 		<!-- Personal Information Section -->
 		<p class="display-4 mt-5">Enter information</p>
 		<hr>
+		<% 
+		if(request.getAttribute("error")!= null){
+			out.print("<p class='alert alert-danger'>" + request.getAttribute("error") + "</p>");
+		} 
+		%>
 		<div class="mt-3 form-floating">
 			<input name="user-name" id="user-name" type="text" class="form-control" required="true">
 			<label for="user-name" class="form-label">Username</label>

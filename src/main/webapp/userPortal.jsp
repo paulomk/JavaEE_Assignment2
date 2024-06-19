@@ -8,6 +8,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-	<%= "<h1> Welcome, to your profile page </h1>"%>
+	<%= "<h1> Welcome," + request.getAttribute("user") + " to your profile page </h1>"%>
 </body>
 </html>

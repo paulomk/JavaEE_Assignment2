@@ -16,6 +16,9 @@
 		if(request.getAttribute("error")!= null){
 			out.print("<p class='alert alert-danger'>" + request.getAttribute("error") + "</p>");
 		} 
+		if(request.getAttribute("user")!= null){
+			out.print("<p class='alert alert-success'>" + request.getAttribute("user") + "Registered Successfully</p>");
+		}
 		%>
 		<form action="validate">
 			<div class="form-floating mb-3">

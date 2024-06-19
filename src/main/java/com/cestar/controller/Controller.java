@@ -82,12 +82,13 @@ public class Controller extends HttpServlet {
 		User userFromForm = new User(userName, password, email, contact, city);
 
 		if(dao.setUser(userFromForm)) {
+			request.setAttribute("user", userName);
 	        request.getRequestDispatcher("index.jsp").forward(request, response);
 
 	        
 		}
 		else {
-			//out.print("Not valid User. Try Again");
+			request.setAttribute("error", "Unvalid Credential. Please enter a different user");
 			request.getRequestDispatcher("register.jsp").forward(request, response);
 			
 		}
